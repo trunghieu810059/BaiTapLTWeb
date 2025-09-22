@@ -5,23 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-	// instance duy nhất của Connection
+    // instance duy nhất của Connection
     private static Connection connection = null;
 
     // Tên driver JDBC cho MySQL
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     // URL kết nối đến database
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/Ltweb";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/ltweb";
     // Tên người dùng và mật khẩu
     private static final String USER = "root";
     private static final String PASSWORD = "Hieu@12345";
 
-    // Phương thức private để ngăn việc tạo instance từ bên ngoài
-    private DBConnection() {
-        // Có thể thêm code khởi tạo nếu cần
+    // Constructor mặc định để class con có thể gọi super()
+    protected DBConnection() {
+        // có thể để trống hoặc log ra
     }
 
-    // Phương thức công khai để lấy instance Connection duy nhất
+    // Phương thức công khai để lấy Connection duy nhất
     public static Connection getConnection() {
         if (connection == null) {
             try {
