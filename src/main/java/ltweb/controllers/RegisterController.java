@@ -101,10 +101,10 @@ public class RegisterController extends HttpServlet {
 			
 			
 			
-			System.out.println("check querry is sucess: " + isSuccess);
+			System.out.println("Da Dong Bo Du Lieu Vao DB" + isSuccess);
 			if (isSuccess) {
-			req.setAttribute("alert", alertMsg);
-			resp.sendRedirect(req.getContextPath() + "/login");
+			req.setAttribute("message", "Đăng ký thành công!");
+			req.getRequestDispatcher("views/register_success.jsp").forward(req, resp);
 			} else {
 				
 			alertMsg = "System error!";

@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
+
+
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
@@ -52,13 +54,13 @@
   </style>
 </head>
 <body>
+<h1> </h1>
   <div class="login-container">
     <h2>Đăng nhập</h2>
 
     <!-- Thông báo lỗi -->
-    <c:if test="${alert != null}">
+   
         <div class="alert alert-danger">${alert}</div>
-    </c:if>
     <p class="text-danger text-center">${requestScope.error}</p>
     
     <!-- Form login -->

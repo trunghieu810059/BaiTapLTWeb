@@ -8,44 +8,39 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ltweb.models.UserModel;
 import ltweb.services.UserService;
 import ltweb.services.Impl.UserServiceImpl;
 @SuppressWarnings("serial")
-@WebServlet("/login")
-public class LoginController  extends HttpServlet {
+@WebServlet(urlPatterns = "/login")
+public class LoginController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse
-	resp) throws ServletException, IOException {
-	resp.setContentType("text/html");
-	resp.setCharacterEncoding("UTF-8");
-	req.setCharacterEncoding("UTF-8");
-	String username = req.getParameter("username");
-	String password = req.getParameter("password");
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
 
-	String alertMsg="";
-	if(username.isEmpty() || password.isEmpty()){
-		alertMsg = "Tài khoản hoặc mật khẩu không được rỗng";
-		req.setAttribute("alert", alertMsg);
-		req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
-		return;
-		}
-		UserService service = new UserServiceImpl();
-		UserModel user = service.login(username, password);
-		if(user!=null){
-			HttpSession session = req.getSession(true);
-			session.setAttribute("account", user);
-						resp.sendRedirect(req.getContextPath()+"/waiting");
-			}else{
-			alertMsg = "Tài khoản hoặc mật khẩu không đúng";
-			req.setAttribute("alert", alertMsg);
-			req.getRequestDispatcher("/views/login.jsp").forward(req,
-			resp);
-			}
-			}
+        UserService service = new UserServiceImpl();
+        var user = service.login(username, password);
+
+        if (user != null) {
+            HttpSession session = req.getSession();
+            session.setAttribute("account", user); // 🔥 Quan trọng
+
+            // Nếu admin → chuyển admin home
+            if (user.getRoleid() == 1) {
+                resp.sendRedirect(req.getContextPath() + "/admin/home");
+            } else {
+                // user thường → về home
+                resp.sendRedirect(req.getContextPath() + "/home");
+            }
+        } else {
+            req.setAttribute("error", "Sai tài khoản hoặc mật khẩu!");
+            req.getRequestDispatcher("views/web/login.jsp").forward(req, resp);
+        }
+    }
+
 	
 	
 	@Override

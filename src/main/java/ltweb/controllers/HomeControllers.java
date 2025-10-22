@@ -1,15 +1,13 @@
 package ltweb.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/admin/home")
+@WebServlet("/home")
 public class HomeControllers extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -21,7 +19,7 @@ public class HomeControllers extends HttpServlet {
 		//out.println("Hello trang chu");
 		//out.close();
 		
-		req.getRequestDispatcher("/views/admin/home.jsp").forward(req, resp);
+		req.getRequestDispatcher("/views/web/home.jsp").forward(req, resp);
 	}
 	
 
